@@ -1,26 +1,23 @@
 plugins {
-    id("java")
+    java
+    id("org.springframework.boot") version "3.0.1"
+    id("io.spring.dependency-management") version "1.1.0"
 }
 
 group = "org.lukas"
 version = "1.0-SNAPSHOT"
+
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    val jUnitVersion = "5.9.0"
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "org.lukas.Main"
-    }
-}
-
-tasks.getByName<Test>("test") {
+tasks.withType<Test> {
     useJUnitPlatform()
 }

@@ -1,2 +1,1 @@
-rootProject.name = "todoapp"
-
+rootProject.name = "springboot-react"
