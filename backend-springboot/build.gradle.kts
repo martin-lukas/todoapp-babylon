@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     java
     id("org.springframework.boot") version "3.0.1"
@@ -21,4 +23,12 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<BootJar> {
+    doLast {
+        print(File("${buildDir}/libs").listFiles()?.forEach {
+            println("File: ${it.name}, size: ${it.length() / 1024} KB")
+        })
+    }
 }
