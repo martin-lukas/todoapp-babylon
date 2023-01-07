@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import org.lukas.todoapp.server.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TodoHandler implements CustomHandler {
     private final List<Todo> todos;
@@ -15,7 +17,7 @@ public class TodoHandler implements CustomHandler {
     }
 
     @Override
-    public Response doHandle(HttpExchange exchange) throws JsonProcessingException {
+    public Response doHandle(HttpExchange exchange) throws IOException {
         return switch (HttpMethod.from(exchange.getRequestMethod())) {
             case GET -> getTodos();
             case POST -> addTodo(exchange);
@@ -24,12 +26,14 @@ public class TodoHandler implements CustomHandler {
     }
 
     private Response getTodos() throws JsonProcessingException {
-        return new Response(objectMapper.writeValueAsString(todos));
+        return new Response(serialize(todos));
     }
 
-    private Response addTodo(HttpExchange exchange) {
-        // TODO: Implement adding a todo
-        return new Response(HttpStatus.CREATED);
+    private Response addTodo(HttpExchange exchange) throws IOException {
+        Todo todo = deserialize(exchange.getRequestBody(), Todo.class);
+        Todo newTodo = new Todo(UUID.randomUUID(), todo.content());
+        todos.add(newTodo);
+        return new Response(HttpStatus.CREATED, serialize(newTodo));
     }
 
     private Response deleteTodo(HttpExchange exchange) {

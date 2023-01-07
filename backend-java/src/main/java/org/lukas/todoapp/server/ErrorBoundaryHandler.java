@@ -16,26 +16,26 @@ public class ErrorBoundaryHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         try {
             Response response = customHandler.doHandle(exchange);
-            submitResponse(exchange, response.status(), response.body().getBytes());
+            submitResponse(exchange, response.status(), response.body());
         } catch (Throwable ex) {
             submitResponse(
                     exchange,
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    "There was an exception thrown: %s".formatted(ex.getMessage()).getBytes()
+                    "There was an exception thrown: %s".formatted(ex.getMessage())
             );
         }
     }
 
-    protected void submitResponse(HttpExchange exchange, HttpStatus status, byte[] bytes)
+    protected void submitResponse(HttpExchange exchange, HttpStatus status, String responseBody)
             throws IOException {
 
         exchange.sendResponseHeaders(
                 status != null ? status.code() : HttpStatus.OK.code(),
-                bytes != null ? bytes.length : 0
+                responseBody != null ? responseBody.getBytes().length : 0
         );
 
-        if (bytes != null) {
-            exchange.getResponseBody().write(bytes);
+        if (responseBody != null) {
+            exchange.getResponseBody().write(responseBody.getBytes());
         }
 
         // Sends the HTTP response
