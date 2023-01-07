@@ -36,8 +36,9 @@ public class TodoHandler implements CustomHandler {
         return new Response(HttpStatus.CREATED, serialize(newTodo));
     }
 
-    private Response deleteTodo(HttpExchange exchange) {
-        // TODO: Implement deleting a todo
+    private Response deleteTodo(HttpExchange exchange) throws IOException {
+        Todo todo = deserialize(exchange.getRequestBody(), Todo.class);
+        todos.remove(todo);
         return new Response();
     }
 }
