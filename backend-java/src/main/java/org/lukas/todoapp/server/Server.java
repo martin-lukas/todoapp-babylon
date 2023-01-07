@@ -1,6 +1,5 @@
 package org.lukas.todoapp.server;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -17,8 +16,8 @@ public class Server {
         }
     }
 
-    public void createContext(String path, HttpHandler handler) {
-        httpServer.createContext(path + '/', handler);
+    public void createContext(String path, CustomHandler handler) {
+        httpServer.createContext(path + '/', new ErrorBoundaryHandler(handler));
     }
 
     public void start() {
