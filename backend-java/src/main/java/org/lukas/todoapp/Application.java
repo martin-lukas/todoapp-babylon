@@ -1,6 +1,6 @@
 package org.lukas.todoapp;
 
-import org.lukas.todoapp.server.Server;
+import org.lukas.todoapp.httpserver.Server;
 
 public class Application {
     public static void main(String[] args) {

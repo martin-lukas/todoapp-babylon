@@ -1,4 +1,4 @@
-package org.lukas.todoapp.server;
+package org.lukas.todoapp.httpserver;
 
 public record Response(HttpStatus status, String body) {
     public Response(HttpStatus status) {

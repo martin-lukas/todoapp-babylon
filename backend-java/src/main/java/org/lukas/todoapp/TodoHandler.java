@@ -2,7 +2,7 @@ package org.lukas.todoapp;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
-import org.lukas.todoapp.server.*;
+import org.lukas.todoapp.httpserver.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

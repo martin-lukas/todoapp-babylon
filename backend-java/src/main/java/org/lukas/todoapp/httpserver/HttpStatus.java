@@ -1,4 +1,4 @@
-package org.lukas.todoapp.server;
+package org.lukas.todoapp.httpserver;
 
 public enum HttpStatus {
     OK(200),

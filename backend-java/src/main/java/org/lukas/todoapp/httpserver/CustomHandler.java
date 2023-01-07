@@ -1,4 +1,4 @@
-package org.lukas.todoapp.server;
+package org.lukas.todoapp.httpserver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
