@@ -1,43 +1,34 @@
 package org.lukas.todoapp;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+import org.lukas.todoapp.server.BaseHandler;
+import org.lukas.todoapp.server.HttpMethod;
+import org.lukas.todoapp.server.HttpStatus;
 
 import java.io.IOException;
 
-public class TodoHandler implements HttpHandler {
+public class TodoHandler extends BaseHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        switch (exchange.getRequestMethod()) {
-            case "GET" -> handleGet(exchange);
-            case "POST" -> handlePost(exchange);
-            case "DELETE" -> handleDelete(exchange);
-            default -> submitResponse(exchange, null, 404);
+        switch (HttpMethod.from(exchange.getRequestMethod())) {
+            case GET -> getTodos(exchange);
+            case POST -> addTodo(exchange);
+            case DELETE -> deleteTodo(exchange);
+            default -> submitResponse(exchange, HttpStatus.NOT_FOUND, null);
         }
     }
 
-    private void handleGet(HttpExchange exchange) throws IOException {
-        submitResponse(exchange, "hello".getBytes(), 200);
+    private void getTodos(HttpExchange exchange) throws IOException {
+        submitResponse(exchange, "hello".getBytes());
     }
 
-    private void handlePost(HttpExchange exchange) throws IOException {
-        submitResponse(exchange, null, 201);
+    private void addTodo(HttpExchange exchange) throws IOException {
+        // TODO: Implement adding a todo
+        submitResponse(exchange, HttpStatus.CREATED);
     }
 
-    private void handleDelete(HttpExchange exchange) throws IOException {
-        submitResponse(exchange, null, 200);
-    }
-
-    private void submitResponse(HttpExchange exchange, byte[] bytes, int status)
-            throws IOException {
-
-        exchange.sendResponseHeaders(status, bytes != null ? bytes.length : 0);
-
-        if (bytes != null) {
-            exchange.getResponseBody().write(bytes);
-        }
-
-        // Sends the HTTP response
-        exchange.getResponseBody().close();
+    private void deleteTodo(HttpExchange exchange) throws IOException {
+        // TODO: Implement deleting a todo
+        submitResponse(exchange);
     }
 }

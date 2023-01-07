@@ -1,4 +1,4 @@
-package org.lukas.todoapp;
+package org.lukas.todoapp.server;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
