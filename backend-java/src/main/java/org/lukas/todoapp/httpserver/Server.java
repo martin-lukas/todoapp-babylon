@@ -1,6 +1,6 @@
 package org.lukas.todoapp.httpserver;
 
-import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.HttpServer; //NOSONAR
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,8 +11,8 @@ public class Server {
     public Server(int port) {
         try {
             this.httpServer = HttpServer.create(new InetSocketAddress(port), 0);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ex) {
+            throw new ServerAddressAllocationException(ex);
         }
     }
 

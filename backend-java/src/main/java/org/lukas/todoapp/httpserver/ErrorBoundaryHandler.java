@@ -1,7 +1,7 @@
 package org.lukas.todoapp.httpserver;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpExchange; //NOSONAR
+import com.sun.net.httpserver.HttpHandler; //NOSONAR
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class ErrorBoundaryHandler implements HttpHandler {
         try {
             Response response = customHandler.doHandle(exchange);
             submitResponse(exchange, response.status(), response.body());
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             submitResponse(
                     exchange,
                     HttpStatus.INTERNAL_SERVER_ERROR,
