@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins= "http://localhost:5173")
 @RequestMapping("/api/todos")
 public class Controller {
     private final List<Todo> todos = new ArrayList<>();
