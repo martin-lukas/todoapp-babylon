@@ -28,4 +28,9 @@ public class Controller {
     public void deleteTodo(@RequestBody Todo todo) {
         todos.remove(todo);
     }
+
+    @DeleteMapping("/all")
+    public void deleteAllTodos() {
+        todos.clear();
+    }
 }
