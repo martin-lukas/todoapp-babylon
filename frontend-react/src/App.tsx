@@ -41,7 +41,7 @@ function App() {
 
   async function handleInputKeyUp(event: React.KeyboardEvent) {
     if (event.key === 'Enter') {
-      submitAddTodo()
+      await submitAddTodo()
     }
   }
 
@@ -68,8 +68,10 @@ function App() {
       <section className="todo-list-section">
         {todos.map(todo => (
           <div className="todo-item-group" key={todo.id}>
-            <input id="todo-item" type={"checkbox"} key={todo.id}/>
-            <label htmlFor="todo-item">{todo.content}</label>
+            <div>
+              <input id="todo-item" type={"checkbox"} key={todo.id}/>
+              <label htmlFor="todo-item">{todo.content}</label>
+            </div>
             <button type="button" onClick={() => submitDeleteTodo(todo)}>
               X
             </button>
