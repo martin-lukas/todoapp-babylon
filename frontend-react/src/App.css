@@ -22,15 +22,63 @@ button {
     border-radius: 5px;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-wrapper {
+    width: 100%;
+}
+
+.loader {
+    margin-top: 20px;
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.small-loader {
+    margin-top: 0;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #2a2a2a;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .add-todo-section {
     display: flex;
     gap: 10px;
     justify-content: center;
 }
 
+.add-todo-btn {
+    width: 26px;
+}
+
 .todo-list-section {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 10px;
     margin: 10px 30px;
     padding: 10px;
@@ -45,7 +93,15 @@ button {
     justify-content: space-between;
 }
 
+.remove-todo-btn {
+    width: 22px;
+}
+
 .global-actions-section {
     display: flex;
     justify-content: center;
+}
+
+.remove-all-btn {
+    width: 82px;
 }
