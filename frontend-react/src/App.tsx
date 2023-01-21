@@ -1,52 +1,35 @@
 import React, { useEffect, useState } from 'react'
-import { addTodo, deleteAllTodos, deleteTodo, getTodos } from './service/todo'
-import { Todo } from './model/Todo'
+import { Todo, addTodo, deleteAllTodos, deleteTodo, getTodos } from './service/todoService'
 import './App.css'
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [newTodo, setNewTodo] = useState<string>("")
 
+  async function fetchTodos() {
+    setTodos(await getTodos())
+  }
+
   useEffect(() => {
-    (async () => {
-      const response = await getTodos()
-      const data = await response.json()
-      setTodos(data)
-    })()
-  }, []);
+    fetchTodos()
+  }, [])
 
   async function submitAddTodo() {
     await addTodo({id: null, content: newTodo})
-    const response = await getTodos()
-    const data = await response.json() 
-    setTodos(data)
+    await fetchTodos()
     setNewTodo('')
   }
 
   async function submitDeleteTodo(todo: Todo) {
     await deleteTodo(todo)
-    const response = await getTodos()
-    const data = await response.json() 
-    setTodos(data)
+    await fetchTodos()
     setNewTodo('')
   }
 
   async function submitDeleteAllTodos() {
     await deleteAllTodos()
-    const response = await getTodos()
-    const data = await response.json() 
-    setTodos(data)
+    await fetchTodos()
     setNewTodo('')
-  }
-
-  async function handleInputKeyUp(event: React.KeyboardEvent) {
-    if (event.key === 'Enter') {
-      await submitAddTodo()
-    }
-  }
-
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setNewTodo(event.target.value)
   }
 
   return (
@@ -58,8 +41,8 @@ function App() {
           id="new-todo"
           type="text"
           value={newTodo}
-          onChange={handleInputChange}
-          onKeyUp={handleInputKeyUp}
+          onChange={e => setNewTodo(e.target.value)}
+          onKeyUp={e => e.key === 'Enter' && submitAddTodo()}
         />
         <button type="button" onClick={submitAddTodo}>
           ✔️
