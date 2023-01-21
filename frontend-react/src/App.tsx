@@ -13,6 +13,10 @@ function App() {
 
   const removedTodo = useRef<string | null>(null)
 
+  function resetInput() {
+    setNewTodo('')
+  }
+
   async function fetchTodos() {
     setTodos(await getTodos())
   }
@@ -20,35 +24,43 @@ function App() {
   useEffect(() => {
     (async () => {
       setAppLoading(true)
+
       await fetchTodos()
+
       setAppLoading(false)
     })()
   }, [])
 
   async function submitAddTodo() {
     setNewLoading(true)
+
     await addTodo({ id: null, content: newTodo })
     await fetchTodos()
+
     setNewLoading(false)
-    setNewTodo('')
+    resetInput()
   }
 
   async function submitDeleteTodo(todo: Todo) {
     setRemoveLoading(true)
     removedTodo.current = todo.id
+
     await deleteTodo(todo)
     await fetchTodos()
+
     setRemoveLoading(false)
     removedTodo.current = null
-    setNewTodo('')
+    resetInput()
   }
 
   async function submitDeleteAllTodos() {
     setRemoveAllLoading(true)
+
     await deleteAllTodos()
     await fetchTodos()
+
     setRemoveAllLoading(false)
-    setNewTodo('')
+    resetInput()
   }
 
   if (isAppLoading) {
